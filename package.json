@@ -1,0 +1,53 @@
+{
+  "name": "dsh-touch",
+  "version": "0.1.0",
+  "description": "摸摸插件：把接入的触摸板（PS5 手柄 / 以后笔记本触摸板）上的『摸』转成触感投给你的 AI 伴侣，她能用手柄震回来；侧栏有设置面板，支持热重载。",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "impl.mjs",
+    "client.js",
+    "hid.mjs",
+    "core.mjs",
+    "cordis.patch.yml",
+    "config.example.json"
+  ],
+  "dependencies": {
+    "node-hid": "^3.4.0",
+    "pkg-prebuilds": "^1.1.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "slots"
+      ],
+      "external": [
+        "react"
+      ]
+    }
+  },
+  "author": "BOX20326 (https://github.com/BOX20326)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BOX20326/dsh-touch.git"
+  },
+  "homepage": "https://github.com/BOX20326/dsh-touch#readme",
+  "bugs": {
+    "url": "https://github.com/BOX20326/dsh-touch/issues"
+  }
+}
