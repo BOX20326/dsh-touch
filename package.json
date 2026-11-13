@@ -1,6 +1,6 @@
 {
   "name": "dsh-touch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "摸摸插件：把接入的触摸板（PS5 手柄 / 以后笔记本触摸板）上的『摸』转成触感投给你的 AI 伴侣，她能用手柄震回来；侧栏有设置面板，支持热重载。",
   "license": "MIT",
   "type": "module",

@@ -1,8 +1,8 @@
 // DSH 摸摸插件 · 宿主半边（v2）
 //
 // 干什么：
-//   · 把接入的触摸板（现在：PS5 手柄 DualSense）上的触感转成话，投进她的会话
-//   · 让她能用工具（touch_back）**用手柄震动摸回来** —— 双向的
+//   · 把接入的触摸板（现在：PS5 手柄 DualSense）上的触感转成话，投进姐姐的会话
+//   · 让姐姐能用工具（touch_back）**用手柄震动摸回来** —— 双向的
 //
 // v2 多了：
 //   · 手势：摸 / 抚摸 / 揉 / 挠 / 戳 / 双手 / 搭手，还分轻重（轻轻 / 不轻不重 / 有点用力）
@@ -436,12 +436,26 @@ export function 创建(ctx) {
   // ── 开关 ──────────────────────────────────────────────
   function 开手柄(说 = true) {
     if (设备) return
-    let HID
+    let HID = null
     try {
       HID = createRequire(import.meta.url)('node-hid')
-    } catch (e) {
-      记('node-hid 装不上，开不了手柄：' + String((e && e.message) || e))
-      return
+    } catch (e1) {
+      try {
+        // 裸模块名解析失手时（目录 require 在 DSH 的进程里会读不到 package.json），
+        // 直接按绝对路径 require 它的主文件 nodehid.js —— 文件级 require 是通的。
+        const 包目录 = join(插件目录, 'node_modules', 'node-hid')
+        const req = createRequire(join(插件目录, 'index.js'))
+        HID = req(join(包目录, 'nodehid.js'))
+        记('node-hid 用绝对文件路径加载成功')
+      } catch (e2) {
+        记(
+          'node-hid 装不上，开不了手柄：' +
+            String((e1 && e1.message) || e1) +
+            ' / ' +
+            String((e2 && e2.message) || e2),
+        )
+        return
+      }
     }
     try {
       const pad = pickGamepad(HID.devices())
